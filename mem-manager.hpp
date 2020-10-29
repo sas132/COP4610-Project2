@@ -10,6 +10,7 @@ class MemManager
 private:
 	//first process
 	Slot* firstSlot;
+	int numSlots;
 
 public:
 	MemManager();

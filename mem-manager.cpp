@@ -6,6 +6,7 @@
 MemManager::MemManager()
 {
 	firstSlot = nullptr;
+	numSlots = 0;
 	std::cout << "This memory manager program allocates slots to processes using the First Fit Dynamic Relocation.\n\n";
 	askSlots();
 }
@@ -16,34 +17,45 @@ void MemManager::askSlots()
 	std::cout << "Please enter the base locations of the slots: ";
 	std::getline(std::cin, str);
 	int current = 0;
-	Slot* lastSlot = nullptr;
+	Slot* lastSlot = new Slot(-1);
 	
 	for(int i = 0; i < str.size(); i++)
 	{
-		if(str.at(i) != ' ' || isalpha(str.at(i)) == false)
+		if(isdigit(str.at(i)))
 		{
 			current = (current * 10) + ((int)str.at(i) - 48);
 		}
-		else if(isalpha(str.at(i)) == false)
+		else if(str.at(i) == ' ')
 		{
 			if(firstSlot == nullptr)
 			{
-				firstSlot->setBaseLocation(current);
-				lastSlot = firstSlot;
+				std::cout << "made it here\n";
+				lastSlot->setBaseLocation(current);
+				std::cout << "finished step one\n";
+				firstSlot = lastSlot;
+				std::cout << "set first slot\n";
 			}
 			else
 			{
 				Slot* temp = new Slot(current);
 				lastSlot->setNextSlot(temp);
 				lastSlot = temp;
+				std::cout << "set the next one\n";
 			}
 			current = 0;
+			numSlots++;
+			std::cout << "numSlots = " << numSlots << "\n";
 		}
 		else
 		{
 			std::cerr << "ERROR: Invalid Input.\n";
 		}
 	}
+
+	Slot* temp = new Slot(current);
+	lastSlot->setNextSlot(temp);
+	numSlots++;
+
 	askDisplacement();
 }
 
@@ -66,6 +78,7 @@ void MemManager::askDisplacement()
 			if(currentSlot != nullptr)
 			{
 				currentSlot->setDisplacement(current);
+				std::cout << currentSlot->getDisplacement() << "\n";
 				currentSlot = currentSlot->getNextSlot();
 				current = 0;
 			}
@@ -79,6 +92,7 @@ void MemManager::askDisplacement()
 			std::cerr << "ERROR: Invalid Input.\n";
 		}
 	}
+	displaySlots();
 }
 
 void MemManager::askProcesses()
@@ -93,8 +107,22 @@ void MemManager::askProcesses()
 void MemManager::displaySlots()
 {
 	std::cout << "Current slot map:\n";
-	//display each slot, seperated by tab
-	//display remaining size
+	Slot* temp = firstSlot;
+
+	for(int i = 0; i < numSlots; i++)
+	{
+		std::cout << temp->getBaseLocation() << "\t";
+		temp = temp->getNextSlot();
+	}
+
+	std::cout << "\n";
+	temp = firstSlot;
+
+	for(int j = 0; j < numSlots; j++)
+	{
+		std::cout << temp->getDisplacement() << "\t";
+		temp = temp->getNextSlot();
+	}
 }
 
 void runManager()
