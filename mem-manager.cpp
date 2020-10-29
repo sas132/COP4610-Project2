@@ -1,16 +1,20 @@
 #include "mem-manager.hpp"
 #include "slots.hpp"
 #include <iostream>
+#include <string>
 
 MemManager::MemManager()
 {
 	std::cout << "This memory manager program allocates slots to processes using the First Fit Dynamic Relocation.\n\n";
+	askSlots();
 }
 
 void MemManager::askSlots()
 {
+	std::string str;
 	std::cout << "Please enter the base locations of the slots: ";
-	//accept input
+	std::getline(std::cin, str);
+	std::cout << str << std::endl;
 	//send input to parser
 	//send each data to a slot
 }
