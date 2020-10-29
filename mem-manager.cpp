@@ -17,13 +17,14 @@ void MemManager::askSlots()
 	std::getline(std::cin, str);
 	int current = 0;
 	Slot* lastSlot = nullptr;
+	
 	for(int i = 0; i < str.size(); i++)
 	{
 		if(str.at(i) != ' ' || isalpha(str.at(i)) == false)
 		{
 			current = (current * 10) + ((int)str.at(i) - 48);
 		}
-		else if(isalpha(str.at(i) == false))
+		else if(isalpha(str.at(i)) == false)
 		{
 			if(firstSlot == nullptr)
 			{
@@ -43,14 +44,41 @@ void MemManager::askSlots()
 			std::cerr << "ERROR: Invalid Input.\n";
 		}
 	}
+	askDisplacement();
 }
 
 void MemManager::askDisplacement()
 {
-	std::cout << "Please enter the displacements for the base locations previously entered by you: ";
-	//accept input
-	//send input to parser
-	//send each data to related slot
+	std::string str;
+	std::cout << "\nPlease enter the displacements for the base locations previously entered by you: ";
+	std::getline(std::cin, str);
+	int current = 0;
+	Slot* currentSlot = firstSlot;
+	
+	for(int i = 0; i < str.size(); i++)
+	{
+		if(str.at(i) != ' ' || isalpha(str.at(i)) == false)
+		{
+			current = (current * 10) + ((int)str.at(i) - 48);
+		}
+		else if(isalpha(str.at(i)) == false)
+		{
+			if(currentSlot != nullptr)
+			{
+				currentSlot->setDisplacement(current);
+				currentSlot = currentSlot->getNextSlot();
+				current = 0;
+			}
+			else
+			{
+				std::cerr << "ERROR: Number of Displacements more than Slots.\n";
+			}
+		}
+		else
+		{
+			std::cerr << "ERROR: Invalid Input.\n";
+		}
+	}
 }
 
 void MemManager::askProcesses()
