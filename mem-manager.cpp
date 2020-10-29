@@ -5,6 +5,7 @@
 
 MemManager::MemManager()
 {
+	firstSlot = nullptr;
 	std::cout << "This memory manager program allocates slots to processes using the First Fit Dynamic Relocation.\n\n";
 	askSlots();
 }
@@ -14,8 +15,8 @@ void MemManager::askSlots()
 	std::string str;
 	std::cout << "Please enter the base locations of the slots: ";
 	std::getline(std::cin, str);
-	std::cout << str << std::endl;
 	int current = 0;
+	Slot* lastSlot = nullptr;
 	for(int i = 0; i < str.size(); i++)
 	{
 		if(str.at(i) != ' ' || isalpha(str.at(i)) == false)
@@ -24,14 +25,24 @@ void MemManager::askSlots()
 		}
 		else if(isalpha(str.at(i) == false))
 		{
-			//send current to make new slot
+			if(firstSlot == nullptr)
+			{
+				firstSlot->setBaseLocation(current);
+				lastSlot = firstSlot;
+			}
+			else
+			{
+				Slot* temp = new Slot(current);
+				lastSlot->setNextSlot(temp);
+				lastSlot = temp;
+			}
+			current = 0;
 		}
 		else
 		{
 			std::cerr << "ERROR: Invalid Input.\n";
 		}
 	}
-	//send each data to a slot
 }
 
 void MemManager::askDisplacement()
