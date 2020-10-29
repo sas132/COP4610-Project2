@@ -157,6 +157,8 @@ void MemManager::askProcesses()
 		std::cout << currentProcess->getSize() << "\t";
 		currentProcess = currentProcess->getNextProcess();
 	}
+
+	std::cout << "\n";
 }
 
 void MemManager::displaySlots()
@@ -181,9 +183,15 @@ void MemManager::displaySlots()
 	std::cout << "\n";
 }
 
-void runManager()
+void MemManager::runManager()
 {
-	std::cout << "Taking up Process " << /*display name of process*/ std::endl;
+	Process* currentProcess = firstProcess;
+
+	for(int i = 0; i < numProcesses; i++)
+	{
+		std::cout << "Taking up Process " << currentProcess->getName() << "\n";
+		currentProcess = currentProcess->getNextProcess();
+	}
 	//send size of process to slot for testing
 	//have it send boolean value if successful or not
 
