@@ -29,22 +29,17 @@ void MemManager::askSlots()
 		{
 			if(firstSlot == nullptr)
 			{
-				std::cout << "made it here\n";
 				lastSlot->setBaseLocation(current);
-				std::cout << "finished step one\n";
 				firstSlot = lastSlot;
-				std::cout << "set first slot\n";
 			}
 			else
 			{
 				Slot* temp = new Slot(current);
 				lastSlot->setNextSlot(temp);
 				lastSlot = temp;
-				std::cout << "set the next one\n";
 			}
 			current = 0;
 			numSlots++;
-			std::cout << "numSlots = " << numSlots << "\n";
 		}
 		else
 		{
@@ -69,16 +64,15 @@ void MemManager::askDisplacement()
 	
 	for(int i = 0; i < str.size(); i++)
 	{
-		if(str.at(i) != ' ' || isalpha(str.at(i)) == false)
+		if(isdigit(str.at(i)))
 		{
 			current = (current * 10) + ((int)str.at(i) - 48);
 		}
-		else if(isalpha(str.at(i)) == false)
+		else if(str.at(i) == ' ')
 		{
 			if(currentSlot != nullptr)
 			{
 				currentSlot->setDisplacement(current);
-				std::cout << currentSlot->getDisplacement() << "\n";
 				currentSlot = currentSlot->getNextSlot();
 				current = 0;
 			}
@@ -92,6 +86,9 @@ void MemManager::askDisplacement()
 			std::cerr << "ERROR: Invalid Input.\n";
 		}
 	}
+
+	currentSlot->setDisplacement(current);
+
 	displaySlots();
 }
 
@@ -123,6 +120,7 @@ void MemManager::displaySlots()
 		std::cout << temp->getDisplacement() << "\t";
 		temp = temp->getNextSlot();
 	}
+	std::cout << "\n";
 }
 
 void runManager()
