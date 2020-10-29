@@ -15,7 +15,22 @@ void MemManager::askSlots()
 	std::cout << "Please enter the base locations of the slots: ";
 	std::getline(std::cin, str);
 	std::cout << str << std::endl;
-	//send input to parser
+	int current = 0;
+	for(int i = 0; i < str.size(); i++)
+	{
+		if(str.at(i) != ' ' || isalpha(str.at(i)) == false)
+		{
+			current = (current * 10) + ((int)str.at(i) - 48);
+		}
+		else if(isalpha(str.at(i) == false))
+		{
+			//send current to make new slot
+		}
+		else
+		{
+			std::cerr << "ERROR: Invalid Input.\n";
+		}
+	}
 	//send each data to a slot
 }
 
