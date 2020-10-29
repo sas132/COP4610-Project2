@@ -1,6 +1,7 @@
 #ifndef MEMMANAGER
 #define MEMMANAGER
 
+#include "slots.hpp"
 #include <iostream>
 
 class MemManager

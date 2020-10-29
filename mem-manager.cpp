@@ -1,4 +1,5 @@
 #include "mem-manager.hpp"
+#include "slots.hpp"
 #include <iostream>
 
 MemManager::MemManager()
@@ -40,7 +41,7 @@ void MemManager::displaySlots()
 
 void runManager()
 {
-	std::cout << "Taking up Process " << /*display name of process*/ endl;
+	std::cout << "Taking up Process " << /*display name of process*/ std::endl;
 	//send size of process to slot for testing
 	//have it send boolean value if successful or not
 
