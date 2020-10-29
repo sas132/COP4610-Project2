@@ -1,5 +1,6 @@
 #include "mem-manager.hpp"
 #include "slots.hpp"
+#include "processes.hpp"
 #include <iostream>
 #include <string>
 
