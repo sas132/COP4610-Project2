@@ -9,9 +9,10 @@
 class MemManager
 {
 private:
-	//first process
+	Process* firstProcess;
 	Slot* firstSlot;
 	int numSlots;
+	int numProcesses;
 
 public:
 	MemManager();
