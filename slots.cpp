@@ -7,6 +7,11 @@ Slot::Slot(int base)
 	nextSlot = nullptr;
 }
 
+Slot::~Slot()
+{
+
+}
+
 int Slot::getBaseLocation()
 {
 	return baseLocation;

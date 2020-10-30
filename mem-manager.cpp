@@ -194,17 +194,31 @@ void MemManager::runManager()
 		if(fitting != nullptr)
 		{
 			std::cout << "Slot assignment successful. " << currentProcess->getName() <<
-				" - Base location " << fitting->getDisplacement() << "\n";
+				" - Base location " << fitting->getBaseLocation() << "\n";
 			fitting->setDisplacement(fitting->getDisplacement() - currentProcess->getSize());
 			fitting->setBaseLocation(fitting->getBaseLocation() + currentProcess->getSize());
+
+			if(fitting->getDisplacement() == 0)
+			{
+				deleteSlot(fitting);
+			}
+
 			displaySlots();
 			currentProcess = currentProcess->getNextProcess();
 			std::cout << "\n";
 		}
-	}
-	//send size of process to slot for testing
-	//have it send boolean value if successful or not
+		else
+		{
+			std::cout << "Slot assignment NOT successful for " << currentProcess->getName() << ".\n\n";
+			std::cout << "Allocation cannot proceed further\n\n";
+			std::cout << "Ending the program now...\n";
 
+			for(int i = 0; i < numSlots; i++)
+			{
+				deleteSlot(firstSlot);
+			}
+		}
+	}
 }
 
 Slot* MemManager::testSlots(int size)
@@ -222,4 +236,36 @@ Slot* MemManager::testSlots(int size)
 		}
 	}
 	return nullptr;
+}
+
+void MemManager::deleteSlot(Slot* slot)
+{
+	if(slot != firstSlot)
+	{
+		Slot* temp = firstSlot;
+
+		for(int i = 0; i < numSlots; i++)
+		{
+			if(slot == temp->getNextSlot())
+			{
+				i = 1000; //unreasonably high number to break out of for loop.
+			}
+			else if(temp != nullptr)
+			{
+				temp = temp->getNextSlot();
+			}
+		}
+
+		temp->setNextSlot(slot->getNextSlot());
+		slot->setNextSlot(nullptr);
+		delete slot;
+	}
+	else
+	{
+		firstSlot = slot->getNextSlot();
+		slot->setNextSlot(nullptr);
+		delete slot;
+	}
+
+	numSlots--;
 }

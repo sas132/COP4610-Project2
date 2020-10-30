@@ -14,6 +14,7 @@ private:
 	int numSlots;
 	int numProcesses;
 	Slot* testSlots(int size);
+	void deleteSlot(Slot* slot);
 
 public:
 	MemManager();

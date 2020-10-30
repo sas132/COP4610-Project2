@@ -10,6 +10,7 @@ private:
 
 public:
 	Slot(int base);
+	~Slot();
 	int getBaseLocation();
 	int getDisplacement();
 	Slot* getNextSlot();
