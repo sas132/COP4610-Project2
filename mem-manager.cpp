@@ -193,7 +193,13 @@ void MemManager::runManager()
 		Slot* fitting = testSlots(currentProcess->getSize());
 		if(fitting != nullptr)
 		{
+			std::cout << "Slot assignment successful. " << currentProcess->getName() <<
+				" - Base location " << fitting->getDisplacement() << "\n";
+			fitting->setDisplacement(fitting->getDisplacement() - currentProcess->getSize());
+			fitting->setBaseLocation(fitting->getBaseLocation() + currentProcess->getSize());
+			displaySlots();
 			currentProcess = currentProcess->getNextProcess();
+			std::cout << "\n";
 		}
 	}
 	//send size of process to slot for testing
