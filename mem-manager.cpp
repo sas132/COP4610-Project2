@@ -186,6 +186,7 @@ void MemManager::displaySlots()
 void MemManager::runManager()
 {
 	Process* currentProcess = firstProcess;
+	std::cout << "\n";
 
 	for(int i = 0; i < numProcesses; i++)
 	{
@@ -204,7 +205,10 @@ void MemManager::runManager()
 			}
 
 			displaySlots();
-			currentProcess = currentProcess->getNextProcess();
+			Process* temp = currentProcess->getNextProcess();
+			currentProcess->setNextProcess(nullptr);
+			delete currentProcess;
+			currentProcess = temp;
 			std::cout << "\n";
 		}
 		else
@@ -213,11 +217,20 @@ void MemManager::runManager()
 			std::cout << "Allocation cannot proceed further\n\n";
 			std::cout << "Ending the program now...\n";
 
-			for(int i = 0; i < numSlots; i++)
+			i = 1000; //big number to exit for loop
+
+			for(int k = 0; k < numProcesses - i; k++)
 			{
-				deleteSlot(firstSlot);
+				Process* temp = currentProcess->getNextProcess();
+				currentProcess->setNextProcess(nullptr);
+				delete currentProcess;
+				currentProcess = temp;
 			}
 		}
+	}
+	for(int j = 0; j < numSlots; j++)
+	{
+		deleteSlot(firstSlot);
 	}
 }
 

@@ -7,6 +7,11 @@ Process::Process(char newName, int newSize)
 	nextProcess = nullptr;
 }
 
+Process::~Process()
+{
+
+}
+
 int Process::getSize()
 {
 	return size;

@@ -10,6 +10,7 @@ private:
 
 public:
 	Process(char newName, int newSize);
+	~Process();
 	int getSize();
 	char getName();
 	Process* getNextProcess();
