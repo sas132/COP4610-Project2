@@ -13,6 +13,7 @@ private:
 	Slot* firstSlot;
 	int numSlots;
 	int numProcesses;
+	Slot* testSlots(int size);
 
 public:
 	MemManager();

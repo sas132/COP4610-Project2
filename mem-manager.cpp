@@ -190,9 +190,30 @@ void MemManager::runManager()
 	for(int i = 0; i < numProcesses; i++)
 	{
 		std::cout << "Taking up Process " << currentProcess->getName() << "\n";
-		currentProcess = currentProcess->getNextProcess();
+		Slot* fitting = testSlots(currentProcess->getSize());
+		if(fitting != nullptr)
+		{
+			currentProcess = currentProcess->getNextProcess();
+		}
 	}
 	//send size of process to slot for testing
 	//have it send boolean value if successful or not
 
+}
+
+Slot* MemManager::testSlots(int size)
+{
+	Slot* currentSlot = firstSlot;
+	for(int i = 0; i < numSlots; i++)
+	{
+		if(size <= currentSlot->getDisplacement())
+		{
+			return currentSlot;
+		}
+		else
+		{
+			currentSlot = currentSlot->getNextSlot();
+		}
+	}
+	return nullptr;
 }
